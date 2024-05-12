@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from joblib import Parallel, delayed
 from sklearn.metrics import roc_auc_score
-from sklearn.model_model import train_test_split
+from sklearn.model_selection import train_test_split
 from TreeModelsFromScratch.RandomForest import RandomForest
 from utils import simulate_data_strobl
 
@@ -38,7 +38,7 @@ def plot_results(all_results):
         plt.figure(figsize=(18, 6))
 
         ks = [result['k'] for result in relevance_result['results']]
-        rocs = [result['roc_auc'] for result in relevance_pack['results']]
+        rocs = [result['roc_auc'] for result in relevance_result['results']]
         mdi_importances = [result['mdi_importances'] for result in relevance_result['results']]
         shap_importances = [result['shap_values'] for result in relevance_result['results']]
 
