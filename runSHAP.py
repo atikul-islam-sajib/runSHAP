@@ -70,13 +70,13 @@ def plot_results(all_results):
         plt.tight_layout()
         plt.show()
 
-def main(n_trees, n_cores, iterations, relevance_values):
+def main(n_trees, n_cores, iterations, relevance_values, depth_dof):
     k_values = range(1, 31)
     all_results = []
     for relevance in relevance_values:
         print(f"Evaluating models for relevance={relevance}")
         results = Parallel(n_jobs=n_cores)(
-            delayed(evaluate_model_for_k)(k, iterations, relevance, n_trees, depth_dof=False) for k in k_values
+            delayed(evaluate_model_for_k)(k, iterations, relevance, n_trees, depth_dof) for k in k_values
         )
         all_results.append({'relevance': relevance, 'results': results})
 
@@ -92,7 +92,9 @@ if __name__ == "__main__":
     parser.add_argument('--n_trees', type=int, default=25, help='Number of trees in the forest')
     parser.add_argument('--n_cores', type=int, default=1, help='Number of cores to use for parallel processing')
     parser.add_argument('--iterations', type=int, default=5, help='Number of iterations per k-value')
+    parser.add_argument('--depth_dof', type=bool, default=False, help='Enable depth degrees of freedom (default: False)')
+    
     args = parser.parse_args()
 
     relevance_values = [0, 0.05, 0.1, 0.15, 0.2]  # Adjust as needed
-    main(args.n_trees, args.n_cores, args.iterations, relevance_values)
+    main(args.n_trees, args.n_cores, args.iterations, relevance_values, args.depth_dof)
