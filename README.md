@@ -55,6 +55,7 @@ You can customize the execution with several options:
 - `--n_trees`: Number of trees in the forest (default: 25)
 - `--n_cores`: Number of CPU cores used for parallel processing (default: 1)
 - `--iterations`: Number of iterations per value of `k` (default: 5)
+- `depth_dof`: Whether depth dof is used or not (default: False)
 
 ### Example Command
 
