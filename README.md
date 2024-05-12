@@ -62,7 +62,7 @@ You can customize the execution with several options:
 To execute the script with specific options, use:
 
 ```bash
-python runSHAP.py --n_trees 30 --n_cores 4 --iterations 10
+python runSHAP.py --n_trees 30 --n_cores 4 --iterations 10 --depth_dof True/False 
 ```
 
 ## Contributing
