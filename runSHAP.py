@@ -101,7 +101,7 @@ if __name__ == "__main__":
     parser.add_argument('--n_trees', type=int, default=25, help='Number of trees in the forest')
     parser.add_argument('--n_cores', type=int, default=1, help='Number of cores to use for parallel processing')
     parser.add_argument('--iterations', type=int, default=5, help='Number of iterations per k-value')
-    parser.add_argument('--depth_dof', type=bool, default=False, help='Enable depth degrees of freedom (default: False)')
+    parser.add_argument('--depth_dof', action='store_true', help='Enable depth degrees of freedom (default: False)')
     
     args = parser.parse_args()
 
