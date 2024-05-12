@@ -7,6 +7,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 from TreeModelsFromScratch.RandomForest import RandomForest
 from utils import simulate_data_strobl
+import os
 
 def calculate_auc_roc(y_true, y_scores):
     """Calculate the AUC-ROC score."""
@@ -32,7 +33,10 @@ def evaluate_model_for_k(k, iterations, relevance, n_trees, depth_dof):
         'shap_values': np.mean(shap_values_all, axis=0)
     }
 
-def plot_results(all_results):
+def plot_results(all_results, depth_dof):
+    output_folder = 'outputs_runSHAP'
+    os.makedirs(output_folder, exist_ok=True)  # Create the folder if it doesn't exist
+    
     for relevance_result in all_results:
         relevance = relevance_result['relevance']
         plt.figure(figsize=(18, 6))
@@ -68,7 +72,12 @@ def plot_results(all_results):
         plt.legend()
 
         plt.tight_layout()
-        plt.show()
+        
+        # Save the plot to the specified output directory
+        filename = f"{output_folder}/results_depth_dof_{depth_dof}_relevance_{relevance:.2f}.png"
+        plt.savefig(filename)
+        plt.close()  # Close the plot to free up memory
+        print(f"Saved plot as {filename}")
 
 def main(n_trees, n_cores, iterations, relevance_values, depth_dof):
     k_values = range(1, 31)
@@ -84,8 +93,8 @@ def main(n_trees, n_cores, iterations, relevance_values, depth_dof):
     with open('evaluation_results.pkl', 'wb') as file:
         pickle.dump(all_results, file)
 
-    # Plotting the results
-    plot_results(all_results)
+    # Plotting and saving the results
+    plot_results(all_results, depth_dof)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate RandomForest models with varying k and plot results.")
